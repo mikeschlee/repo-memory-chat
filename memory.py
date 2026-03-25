@@ -1,8 +1,10 @@
 import json
 import pdfplumber
 import anthropic
+from dotenv import load_dotenv
 from db import insert_document, insert_concept
 
+load_dotenv()
 client = anthropic.Anthropic()
 MODEL = "claude-opus-4-6"
 

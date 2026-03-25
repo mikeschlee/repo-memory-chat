@@ -3,6 +3,9 @@ import os
 
 import anthropic
 import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from db import concept_count, init_db, list_documents, search_concepts
 
