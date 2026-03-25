@@ -1,0 +1,7 @@
+.env
+memory.db
+papers/*.pdf
+__pycache__/
+*.pyc
+.venv/
+venv/
