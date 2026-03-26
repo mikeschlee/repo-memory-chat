@@ -36,5 +36,4 @@ jobs:
 
             Skip formatting and style — those are handled by linters.
             Post findings as inline review comments where possible.
-          allowed_tools: "Bash,Read,Glob,Grep"
-          claude_args: "--max-turns 15"
+          claude_args: "--max-turns 30 --allowedTools Bash,Read,Glob,Grep --dangerously-skip-permissions"
