@@ -38,6 +38,7 @@ def tmp_db(monkeypatch, tmp_path):
     """
     db_file = str(tmp_path / "test.db")
     monkeypatch.setattr(db, "DB_PATH", db_file)
+    monkeypatch.delenv("DATABASE_URL", raising=False)  # force SQLite fallback
     monkeypatch.chdir(tmp_path)
     db.init_db()
     return db_file
