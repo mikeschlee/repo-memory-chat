@@ -6,7 +6,7 @@ from db import insert_document, insert_concept
 
 load_dotenv()
 client = anthropic.Anthropic()
-MODEL = "claude-opus-4-6"
+MODEL = "claude-haiku-4-5-20251001"  # cost-efficient for bulk ingestion
 
 # Max characters of PDF text sent to Claude for concept extraction.
 # arxiv papers average ~60k chars; we cap at 80k to stay well within context.

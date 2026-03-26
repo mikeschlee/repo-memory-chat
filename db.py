@@ -1,14 +1,36 @@
-import sqlite3
+"""
+Database layer — supports both SQLite (local/test) and PostgreSQL (production).
+
+When DATABASE_URL env var is set: uses PostgreSQL via psycopg2.
+Otherwise: uses SQLite with DB_PATH (monkeypatchable for tests).
+"""
+
+import os
 import uuid
 from datetime import datetime
 
+# PostgreSQL connection string — set this in .env or Streamlit secrets for production
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+# SQLite fallback — used when DATABASE_URL is not set (local dev + tests)
 DB_PATH = "memory.db"
+
+# SQL parameter placeholder differs between backends
+PH = "%s" if DATABASE_URL else "?"
+
+
+def _connect():
+    if DATABASE_URL:
+        import psycopg2
+        return psycopg2.connect(DATABASE_URL)
+    import sqlite3
+    return sqlite3.connect(DB_PATH)
 
 
 def init_db():
-    conn = sqlite3.connect(DB_PATH)
+    conn = _connect()
     c = conn.cursor()
-    c.execute("""
+    c.execute(f"""
         CREATE TABLE IF NOT EXISTS documents (
             id TEXT PRIMARY KEY,
             title TEXT,
@@ -17,7 +39,7 @@ def init_db():
             processed_at TEXT
         )
     """)
-    c.execute("""
+    c.execute(f"""
         CREATE TABLE IF NOT EXISTS concepts (
             id TEXT PRIMARY KEY,
             document_id TEXT,
@@ -31,9 +53,9 @@ def init_db():
 
 
 def document_exists(source_url):
-    conn = sqlite3.connect(DB_PATH)
+    conn = _connect()
     c = conn.cursor()
-    c.execute("SELECT id FROM documents WHERE source_url = ?", (source_url,))
+    c.execute(f"SELECT id FROM documents WHERE source_url = {PH}", (source_url,))
     row = c.fetchone()
     conn.close()
     return row is not None
@@ -41,10 +63,10 @@ def document_exists(source_url):
 
 def insert_document(title, source_url, filename):
     doc_id = str(uuid.uuid4())
-    conn = sqlite3.connect(DB_PATH)
+    conn = _connect()
     c = conn.cursor()
     c.execute(
-        "INSERT INTO documents VALUES (?, ?, ?, ?, ?)",
+        f"INSERT INTO documents VALUES ({PH}, {PH}, {PH}, {PH}, {PH})",
         (doc_id, title, source_url, filename, datetime.now().isoformat()),
     )
     conn.commit()
@@ -54,10 +76,10 @@ def insert_document(title, source_url, filename):
 
 def insert_concept(document_id, concept_title, understanding):
     concept_id = str(uuid.uuid4())
-    conn = sqlite3.connect(DB_PATH)
+    conn = _connect()
     c = conn.cursor()
     c.execute(
-        "INSERT INTO concepts VALUES (?, ?, ?, ?)",
+        f"INSERT INTO concepts VALUES ({PH}, {PH}, {PH}, {PH})",
         (concept_id, document_id, concept_title, understanding),
     )
     conn.commit()
@@ -66,18 +88,18 @@ def insert_concept(document_id, concept_title, understanding):
 
 def search_concepts(keywords):
     """Search concept understandings for any of the given keywords (case-insensitive)."""
-    conn = sqlite3.connect(DB_PATH)
+    conn = _connect()
     c = conn.cursor()
     seen = set()
     results = []
     for kw in keywords:
         c.execute(
-            """
+            f"""
             SELECT c.concept_title, c.understanding, d.title, d.source_url
             FROM concepts c
             JOIN documents d ON c.document_id = d.id
-            WHERE LOWER(c.understanding) LIKE LOWER(?)
-               OR LOWER(c.concept_title) LIKE LOWER(?)
+            WHERE LOWER(c.understanding) LIKE LOWER({PH})
+               OR LOWER(c.concept_title) LIKE LOWER({PH})
             """,
             (f"%{kw}%", f"%{kw}%"),
         )
@@ -91,7 +113,7 @@ def search_concepts(keywords):
 
 
 def list_documents():
-    conn = sqlite3.connect(DB_PATH)
+    conn = _connect()
     c = conn.cursor()
     c.execute(
         "SELECT id, title, filename, processed_at FROM documents ORDER BY processed_at DESC"
@@ -102,7 +124,7 @@ def list_documents():
 
 
 def concept_count():
-    conn = sqlite3.connect(DB_PATH)
+    conn = _connect()
     c = conn.cursor()
     c.execute("SELECT COUNT(*) FROM concepts")
     n = c.fetchone()[0]

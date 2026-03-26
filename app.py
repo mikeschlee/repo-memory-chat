@@ -1,12 +1,25 @@
 import json
 import os
 
-import anthropic
 import streamlit as st
 from dotenv import load_dotenv
 
+# 1. Load .env for local development (no-op on Streamlit Cloud)
 load_dotenv()
 
+# 2. Inject Streamlit secrets into env so db.py and anthropic pick them up.
+#    On Streamlit Cloud, secrets are set in the dashboard and available via
+#    st.secrets. Locally, .env covers it. setdefault means .env wins locally.
+try:
+    for _key, _val in st.secrets.items():
+        if isinstance(_val, str):
+            os.environ.setdefault(_key, _val)
+except Exception:
+    pass
+
+# 3. Import project modules AFTER env is populated (db.py reads DATABASE_URL
+#    at import time to choose SQLite vs PostgreSQL backend)
+import anthropic
 from db import concept_count, init_db, list_documents, search_concepts
 
 client = anthropic.Anthropic()
