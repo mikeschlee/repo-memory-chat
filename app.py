@@ -153,7 +153,8 @@ if prompt := st.chat_input("e.g. How do generative agents manage long-term memor
         status.update(label=f"Found {len(concepts)} concept(s) — generating answer...")
         answer = answer_with_context(prompt, concepts)
 
-        status.update(label=f"Done — {len(concepts)} concept(s) used", state="complete")
+        state = "complete" if concepts else "error"
+        status.update(label=f"Done — {len(concepts)} concept(s) used", state=state)
 
         st.markdown(answer)
 
