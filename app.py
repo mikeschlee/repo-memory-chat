@@ -120,6 +120,13 @@ with st.sidebar:
     st.caption("Semantic memory search over research papers")
     st.divider()
 
+    # Debug: show which DB backend is active
+    import db as _db
+    if _db.DATABASE_URL:
+        st.success("DB: PostgreSQL ✓")
+    else:
+        st.error("DB: SQLite (DATABASE_URL not set!)")
+
     docs = list_documents()
     n_concepts = concept_count()
 
