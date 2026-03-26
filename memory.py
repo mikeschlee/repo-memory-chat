@@ -2,9 +2,11 @@ import json
 import pdfplumber
 import anthropic
 from dotenv import load_dotenv
-from db import insert_document, insert_concept
 
+# Must load .env before importing db — db.py reads DATABASE_URL at import time
 load_dotenv()
+
+from db import insert_document, insert_concept
 client = anthropic.Anthropic()
 MODEL = "claude-haiku-4-5-20251001"  # cost-efficient for bulk ingestion
 

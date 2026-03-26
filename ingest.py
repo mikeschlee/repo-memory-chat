@@ -12,6 +12,10 @@ import os
 import time
 
 import requests
+from dotenv import load_dotenv
+
+# Must load .env before importing db — db.py reads DATABASE_URL at import time
+load_dotenv()
 
 from db import document_exists, init_db
 from memory import ingest_pdf
