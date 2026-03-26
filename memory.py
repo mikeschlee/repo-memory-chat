@@ -57,17 +57,28 @@ Return ONLY a valid JSON array with no extra text:
   ...
 ]"""
 
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=4096,
-        messages=[{"role": "user", "content": prompt}],
-    )
+    last_error = None
+    for attempt in range(1, 4):  # up to 3 attempts
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=4096,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw = response.content[0].text
+        start = raw.find("[")
+        end = raw.rfind("]") + 1
+        if start == -1 or end == 0:
+            last_error = ValueError("No JSON array found in response")
+            print(f"  Attempt {attempt} failed: no JSON array — retrying...")
+            continue
+        try:
+            concepts = json.loads(raw[start:end])
+            return concepts
+        except json.JSONDecodeError as e:
+            last_error = e
+            print(f"  Attempt {attempt} failed: {e} — retrying...")
 
-    raw = response.content[0].text
-    start = raw.find("[")
-    end = raw.rfind("]") + 1
-    concepts = json.loads(raw[start:end])
-    return concepts
+    raise last_error
 
 
 def ingest_pdf(pdf_path, title, source_url):
