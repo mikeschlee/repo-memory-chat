@@ -21,6 +21,7 @@ except Exception:
 #    at import time to choose SQLite vs PostgreSQL backend)
 import anthropic
 from db import concept_count, init_db, list_documents, search_concepts
+import prompts
 
 client = anthropic.Anthropic()
 MODEL = "claude-opus-4-6"
@@ -35,23 +36,7 @@ def extract_keywords(question: str) -> list[str]:
         model=MODEL,
         max_tokens=256,
         messages=[
-            {
-                "role": "user",
-                "content": f"""You are a search query analyst.
-
-Given the user question below, extract 6–12 keywords or short phrases that would
-best match relevant concepts stored in a research paper memory database.
-
-Focus on:
-- Technical terms and named methods/architectures
-- Core concepts the question is about
-- Synonyms or related terms that might appear in paper descriptions
-
-Return ONLY a valid JSON array of strings with no extra text.
-Example: ["memory augmented", "episodic memory", "retrieval", "long context"]
-
-Question: {question}""",
-            }
+            {"role": "user", "content": prompts.keyword_extraction(question)}
         ],
     )
     raw = response.content[0].text
@@ -81,21 +66,7 @@ def answer_with_context(question: str, concepts: list) -> str:
         model=MODEL,
         max_tokens=2048,
         messages=[
-            {
-                "role": "user",
-                "content": f"""You are a research assistant with access to a curated memory database of
-research paper concepts. Answer the question below using ONLY the retrieved concept
-understandings provided. Do not add information from outside this context.
-
-For each key claim, cite the source paper using its title.
-
-RETRIEVED CONCEPTS:
-{context}
-
-QUESTION: {question}
-
-Provide a thorough, well-structured answer:""",
-            }
+            {"role": "user", "content": prompts.answer_from_concepts(question, context)}
         ],
     )
     return response.content[0].text

@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from db import insert_document, insert_concept
+import prompts
 client = anthropic.Anthropic()
 MODEL = "claude-haiku-4-5-20251001"  # cost-efficient for bulk ingestion
 
@@ -30,32 +31,7 @@ def extract_concepts(text, title):
     Send document text to Claude and receive back a list of core concepts,
     each with a dense semantic understanding paragraph.
     """
-    prompt = f"""You are processing a research paper titled: "{title}"
-
-Below is the full paper text (truncated if very long):
----
-{text[:MAX_TEXT_CHARS]}
----
-
-Your task is to identify the 8–15 most important core concepts in this paper.
-
-For each concept write a rich semantic understanding — a dense paragraph that captures:
-- What the concept is
-- Why it matters in the context of this paper
-- How it relates to the paper's main contribution
-- Key technical details, mechanisms, or nuances a researcher would want to know
-
-These understandings will be stored in a semantic memory database and searched later
-to answer questions about this paper WITHOUT re-reading it. Make them thorough and precise.
-
-Return ONLY a valid JSON array with no extra text:
-[
-  {{
-    "concept_title": "Short descriptive title (5-10 words)",
-    "understanding": "Dense semantic paragraph (100-200 words)..."
-  }},
-  ...
-]"""
+    prompt = prompts.concept_extraction(title, text, MAX_TEXT_CHARS)
 
     last_error = None
     for attempt in range(1, 4):  # up to 3 attempts
