@@ -31,6 +31,15 @@ Takes ~20–40 minutes. Papers download from arxiv into `papers/` (gitignored). 
 streamlit run app.py
 ```
 
+## Third-party providers
+
+| Provider | Purpose | Where configured |
+|---|---|---|
+| [Anthropic](https://www.anthropic.com) | Claude API (`claude-opus-4-6`) — keyword extraction + answering | `ANTHROPIC_API_KEY` env var |
+| [Streamlit Cloud](https://streamlit.io/cloud) | Web UI framework + public hosting/deployment | `.streamlit/secrets.toml` on the dashboard |
+| [Supabase](https://supabase.com) | Managed PostgreSQL database (production) | `DATABASE_URL` env var (falls back to SQLite locally) |
+| [arXiv](https://arxiv.org) | Source for research paper PDFs ingested into the database | Hardcoded URLs in `ingest.py` |
+
 ## Papers included
 
 20 research papers on LLM memory approaches beyond RAG, including MemGPT, Generative Agents, Think-in-Memory, A-MEM, MemoRAG, CoALA, MemoryBank, Reflexion, HippoRAG, Larimar, and more.
