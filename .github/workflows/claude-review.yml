@@ -27,6 +27,7 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: |
             Review this pull request. Focus on:
             - Logic errors and bugs (especially in memory retrieval, semantic search, and PDF ingestion)
@@ -36,4 +37,4 @@ jobs:
 
             Skip formatting and style — those are handled by linters.
             Post findings as inline review comments where possible.
-          claude_args: "--max-turns 30 --allowedTools Bash,Read,Glob,Grep --dangerously-skip-permissions"
+          claude_args: "--max-turns 30"
