@@ -1,6 +1,6 @@
 # Repo Memory Chat
 
-A chat interface for querying research papers using LLM-generated semantic memory — no RAG, no vector embeddings.
+A chat interface for querying research papers using LLM-generated semantic memory — no RAG, no vector embeddings. Seeded with 20 arxiv papers on LLM memory research (303 concepts).
 
 ## How it works
 
