@@ -1,0 +1,35 @@
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  review:
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request != null &&
+       contains(github.event.comment.body, '@claude'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Review this pull request. Focus on:
+            - Logic errors and bugs (especially in memory retrieval, semantic search, and PDF ingestion)
+            - Security issues (SQL injection, secrets exposure, unsafe file handling)
+            - Correctness of database operations (psycopg2, schema migrations)
+            - Edge cases in the Streamlit UI or chat flow
+
+            Skip formatting and style — those are handled by linters.
+            Post findings as inline review comments where possible.
+          claude_args: "--max-turns 5"
