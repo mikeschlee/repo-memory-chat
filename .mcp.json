@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "repo-memory": {
+      "command": "/home/mikeschlee/python projects/repo-memory-chat/.venv/bin/python",
+      "args": ["/home/mikeschlee/python projects/repo-memory-chat/mcp_server.py"],
+      "env": {}
+    }
+  }
+}
