@@ -36,4 +36,5 @@ jobs:
 
             Skip formatting and style — those are handled by linters.
             Post findings as inline review comments where possible.
-          claude_args: "--max-turns 5"
+          allowed_tools: "Bash,Read,Glob,Grep"
+          claude_args: "--max-turns 15"
