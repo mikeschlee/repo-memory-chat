@@ -7,3 +7,5 @@ psycopg2-binary>=2.9.0
 fastapi>=0.115.0
 uvicorn>=0.32.0
 mcp[cli]>=1.0.0
+voyageai>=0.3.0
+numpy>=1.26.0
