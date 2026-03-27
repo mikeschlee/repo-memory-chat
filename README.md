@@ -1,6 +1,6 @@
 # Repo Memory Chat
 
-A chat interface for querying research papers using LLM-generated semantic memory — no RAG, no vector embeddings. Seeded with 20 arxiv papers on LLM memory research (303 concepts).
+A chat interface for querying research papers using LLM-generated semantic memory. Combines keyword search with Voyage AI vector embeddings and weighted scoring. Seeded with 20 arxiv papers on LLM memory research.
 
 ## How it works
 
@@ -35,9 +35,11 @@ streamlit run app.py
 
 | Provider | Purpose | Where configured |
 |---|---|---|
-| [Anthropic](https://www.anthropic.com) | Claude API (`claude-opus-4-6`) — keyword extraction + answering | `ANTHROPIC_API_KEY` env var |
+| [Anthropic](https://www.anthropic.com) | Claude API (`claude-opus-4-6`) — concept extraction, query understanding, answering | `ANTHROPIC_API_KEY` env var |
+| [Voyage AI](https://www.voyageai.com) | Embeddings (`voyage-3`) — vector search and semantic similarity | `VOYAGE_API_KEY` env var |
 | [Streamlit Cloud](https://streamlit.io/cloud) | Web UI framework + public hosting/deployment | `.streamlit/secrets.toml` on the dashboard |
-| [Supabase](https://supabase.com) | Managed PostgreSQL database (production) | `DATABASE_URL` env var (falls back to SQLite locally) |
+| [Render](https://render.com) | API server hosting (`mcp_server.py` / FastAPI) | Render dashboard environment variables |
+| [Supabase](https://supabase.com) | Managed PostgreSQL + pgvector database (production) | `DATABASE_URL` env var (falls back to SQLite locally) |
 | [arXiv](https://arxiv.org) | Source for research paper PDFs ingested into the database | Hardcoded URLs in `ingest.py` |
 
 ## Papers included
