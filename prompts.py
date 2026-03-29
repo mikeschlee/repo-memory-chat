@@ -3,21 +3,34 @@ LLM prompt templates. Edit this file to tune model instructions.
 """
 
 
-def keyword_extraction(question: str) -> str:
-    return f"""You are a search query analyst.
+def query_understanding(question: str) -> str:
+    return f"""You are a search query analyst for a research paper memory database.
 
-Given the user question below, extract 6–12 keywords or short phrases that would
-best match relevant concepts stored in a research paper memory database.
+Given the user question below, produce two things:
 
-Focus on:
-- Technical terms and named methods/architectures
-- Core concepts the question is about
-- Synonyms or related terms that might appear in paper descriptions
+1. **keywords** — 6–12 keywords or short phrases for substring search. Focus on:
+   - Technical terms and named methods/architectures
+   - Core concepts the question is about
+   - Synonyms or related terms that might appear in paper descriptions
 
-Return ONLY a valid JSON array of strings with no extra text.
-Example: ["memory augmented", "episodic memory", "retrieval", "long context"]
+2. **semantic_answer** — A hypothetical answer paragraph (50–100 words) that
+   describes what a perfect answer to this question would look like. Write it as
+   if you are summarising a research finding that directly answers the question.
+   This will be converted to a vector and used to find semantically similar concepts
+   even when exact keywords don't match.
+
+Return ONLY a valid JSON object with no extra text:
+{{
+  "keywords": ["memory augmented", "episodic memory", "retrieval", "long context"],
+  "semantic_answer": "A perfect answer would describe a system that maintains long-term memory by..."
+}}
 
 Question: {question}"""
+
+
+# Backward-compatible alias used by mcp_server.py
+def keyword_extraction(question: str) -> str:
+    return query_understanding(question)
 
 
 def global_rescore(concepts_text: str) -> str:

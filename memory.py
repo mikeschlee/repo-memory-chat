@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from db import insert_document, insert_concept, get_concept_types
+from embeddings import embed_concept, embed_texts
 import prompts
 client = anthropic.Anthropic()
 MODEL = "claude-haiku-4-5-20251001"  # cost-efficient for bulk ingestion
@@ -73,8 +74,13 @@ def ingest_pdf(pdf_path, title, source_url):
     if summary:
         print(f"  Summary: {summary[:80]}...")
 
+    # Generate embeddings for all concepts in one batch (cheaper than one-by-one)
+    print(f"  Generating embeddings for {len(concepts)} concepts...")
+    texts = [f"{c['concept_title']}\n\n{c['understanding']}" for c in concepts]
+    embeddings = embed_texts(texts, input_type="document")
+
     doc_id = insert_document(title, source_url, pdf_path, summary=summary)
-    for concept in concepts:
+    for concept, embedding in zip(concepts, embeddings):
         insert_concept(
             doc_id,
             concept["concept_title"],
@@ -82,6 +88,7 @@ def ingest_pdf(pdf_path, title, source_url):
             concept_type=concept.get("concept_type"),
             importance=concept.get("importance"),
             section=concept.get("section"),
+            embedding=embedding,
         )
         type_tag = f"[{concept.get('concept_type', '?')}]"
         score_tag = f"importance={concept.get('importance', '?')}"

@@ -1,4 +1,3 @@
-import json
 import os
 
 import streamlit as st
@@ -8,8 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # 2. Inject Streamlit secrets into env so db.py and anthropic pick them up.
-#    On Streamlit Cloud, secrets are set in the dashboard and available via
-#    st.secrets. Locally, .env covers it. setdefault means .env wins locally.
 try:
     for _key, _val in st.secrets.items():
         if isinstance(_val, str):
@@ -17,11 +14,11 @@ try:
 except Exception:
     pass
 
-# 3. Import project modules AFTER env is populated (db.py reads DATABASE_URL
-#    at import time to choose SQLite vs PostgreSQL backend)
+# 3. Import project modules AFTER env is populated
 import anthropic
-from db import concept_count, init_db, list_documents, search_concepts
+from db import concept_count, init_db, list_documents
 import prompts
+from search import run_search
 
 client = anthropic.Anthropic()
 MODEL = "claude-opus-4-6"
@@ -30,22 +27,7 @@ MODEL = "claude-opus-4-6"
 # LLM helpers
 # ---------------------------------------------------------------------------
 
-def extract_keywords(question: str) -> list[str]:
-    """Ask Claude to derive search keywords from the user's question."""
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=256,
-        messages=[
-            {"role": "user", "content": prompts.keyword_extraction(question)}
-        ],
-    )
-    raw = response.content[0].text
-    start = raw.find("[")
-    end = raw.rfind("]") + 1
-    return json.loads(raw[start:end])
-
-
-def answer_with_context(question: str, concepts: list) -> str:
+def answer_with_context(question: str, concepts) -> str:
     """Generate an answer grounded only in the retrieved concept understandings."""
     if not concepts:
         return (
@@ -54,11 +36,14 @@ def answer_with_context(question: str, concepts: list) -> str:
         )
 
     context_blocks = []
-    for i, (concept_title, understanding, doc_title, source_url) in enumerate(concepts, 1):
+    for i, concept in enumerate(concepts, 1):
         context_blocks.append(
-            f"[{i}] Concept: {concept_title}\n"
-            f"    Source: {doc_title} ({source_url})\n"
-            f"    Understanding: {understanding}"
+            f"[{i}] Concept: {concept.concept_title}\n"
+            f"    Type: {concept.concept_type or '?'}  |  "
+            f"Importance: {concept.importance or '?'}  |  "
+            f"Score: {concept.final_score:.2f}\n"
+            f"    Source: {concept.paper_title} ({concept.source_url})\n"
+            f"    Understanding: {concept.understanding}"
         )
     context = "\n\n".join(context_blocks)
 
@@ -91,7 +76,6 @@ with st.sidebar:
     st.caption("Semantic memory search over research papers")
     st.divider()
 
-    # Debug: show which DB backend is active
     import db as _db
     if _db.DATABASE_URL:
         st.success("DB: PostgreSQL ✓")
@@ -141,15 +125,11 @@ if prompt := st.chat_input("e.g. How do generative agents manage long-term memor
     with st.chat_message("assistant"):
         status = st.status("Scanning memory...", expanded=False)
 
-        # Step 1: keyword extraction
-        status.update(label="Extracting search keywords...")
-        keywords = extract_keywords(prompt)
+        # Step 1: understand query + run both searches + score
+        status.update(label="Understanding query and scanning memory...")
+        concepts, keywords, semantic_answer = run_search(prompt)
 
-        # Step 2: search concept DB
-        status.update(label=f"Searching memory for: {', '.join(keywords[:5])}...")
-        concepts = search_concepts(keywords)
-
-        # Step 3: generate answer
+        # Step 2: generate answer
         status.update(label=f"Found {len(concepts)} concept(s) — generating answer...")
         answer = answer_with_context(prompt, concepts)
 
@@ -159,11 +139,20 @@ if prompt := st.chat_input("e.g. How do generative agents manage long-term memor
         st.markdown(answer)
 
         # Build metadata string for expandable details
-        meta_lines = [f"**Keywords searched:** {', '.join(f'`{k}`' for k in keywords)}", ""]
+        meta_lines = [
+            f"**Keywords searched:** {', '.join(f'`{k}`' for k in keywords)}",
+            f"**Semantic query:** _{semantic_answer[:120]}..._" if len(semantic_answer) > 120 else f"**Semantic query:** _{semantic_answer}_",
+            "",
+        ]
         if concepts:
             meta_lines.append(f"**{len(concepts)} concept(s) retrieved:**")
-            for concept_title, _, doc_title, source_url in concepts:
-                meta_lines.append(f"- [{concept_title}]({source_url}) — *{doc_title}*")
+            for concept in concepts:
+                keyword_tag = "🔑" if concept.keyword_hit else "〰"
+                meta_lines.append(
+                    f"- {keyword_tag} [{concept.concept_title}]({concept.source_url}) "
+                    f"— *{concept.paper_title}* "
+                    f"| score={concept.final_score:.2f} importance={concept.importance or '?'}"
+                )
         else:
             meta_lines.append("*No matching concepts found.*")
         meta = "\n".join(meta_lines)
