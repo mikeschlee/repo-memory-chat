@@ -1,5 +1,6 @@
 import json
-import pdfplumber
+import pymupdf4llm
+import trafilatura
 from groq import Groq
 from dotenv import load_dotenv
 
@@ -12,24 +13,28 @@ import prompts
 client = Groq()
 MODEL = "llama-3.3-70b-versatile"
 
-# Max characters of PDF text sent to Claude for concept extraction.
+# Max characters of markdown text sent to LLM for concept extraction.
 # arxiv papers average ~60k chars; we cap at 80k to stay well within context.
 MAX_TEXT_CHARS = 80_000
 
 
-def extract_text_from_pdf(pdf_path):
-    text = ""
-    with pdfplumber.open(pdf_path) as pdf:
-        for page in pdf.pages:
-            page_text = page.extract_text()
-            if page_text:
-                text += page_text + "\n"
-    return text
+def pdf_to_markdown(pdf_path):
+    return pymupdf4llm.to_markdown(pdf_path)
+
+
+def url_to_markdown(url):
+    downloaded = trafilatura.fetch_url(url)
+    if not downloaded:
+        raise ValueError(f"Failed to fetch URL: {url}")
+    markdown = trafilatura.extract(downloaded, output_format="markdown", include_links=False)
+    if not markdown:
+        raise ValueError(f"Failed to extract content from URL: {url}")
+    return markdown
 
 
 def extract_concepts(text, title, existing_types=None):
     """
-    Send document text to Claude and receive back a summary + list of enriched concepts.
+    Send document text to LLM and receive back a summary + list of enriched concepts.
     Returns (summary, concepts) where concepts is a list of dicts.
     """
     prompt = prompts.concept_extraction(title, text, MAX_TEXT_CHARS, existing_types)
@@ -58,28 +63,25 @@ def extract_concepts(text, title, existing_types=None):
     raise last_error
 
 
-def ingest_pdf(pdf_path, title, source_url):
-    print(f"\n[ingest] {title}")
-    print(f"  Extracting text from PDF...")
-    text = extract_text_from_pdf(pdf_path)
-    char_count = len(text)
+def ingest_document(markdown, title, source_url, filename=None):
+    """Core ingestion — takes markdown text, extracts concepts, stores to DB."""
+    char_count = len(markdown)
     print(f"  {char_count:,} characters extracted")
 
     existing_types = get_concept_types()
     print(f"  Existing concept types: {existing_types or '(none yet)'}")
 
-    print(f"  Sending to Claude for concept extraction...")
-    summary, concepts = extract_concepts(text, title, existing_types)
+    print(f"  Sending to LLM for concept extraction...")
+    summary, concepts = extract_concepts(markdown, title, existing_types)
     print(f"  {len(concepts)} concepts identified")
     if summary:
         print(f"  Summary: {summary[:80]}...")
 
-    # Generate embeddings for all concepts in one batch (cheaper than one-by-one)
     print(f"  Generating embeddings for {len(concepts)} concepts...")
     texts = [f"{c['concept_title']}\n\n{c['understanding']}" for c in concepts]
     embeddings = embed_texts(texts, input_type="document")
 
-    doc_id = insert_document(title, source_url, pdf_path, summary=summary)
+    doc_id = insert_document(title, source_url, filename, summary=summary)
     for concept, embedding in zip(concepts, embeddings):
         insert_concept(
             doc_id,
@@ -96,3 +98,17 @@ def ingest_pdf(pdf_path, title, source_url):
 
     print(f"  Done — {len(concepts)} concepts stored.")
     return doc_id
+
+
+def ingest_pdf(pdf_path, title, source_url):
+    print(f"\n[ingest] {title}")
+    print(f"  Converting PDF to markdown...")
+    markdown = pdf_to_markdown(pdf_path)
+    return ingest_document(markdown, title, source_url, filename=pdf_path)
+
+
+def ingest_url(url, title):
+    print(f"\n[ingest] {title}")
+    print(f"  Fetching and converting {url} to markdown...")
+    markdown = url_to_markdown(url)
+    return ingest_document(markdown, title, source_url=url, filename=None)

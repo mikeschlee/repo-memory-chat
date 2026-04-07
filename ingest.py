@@ -3,8 +3,9 @@ Seed script — downloads the 20 research papers from arxiv and ingests them
 into the semantic memory database.
 
 Usage:
-    python ingest.py              # ingest all papers
-    python ingest.py --skip N     # skip first N papers (resume after failure)
+    python ingest.py                          # ingest all papers
+    python ingest.py --skip N                 # skip first N papers (resume after failure)
+    python ingest.py --url URL --title TITLE  # ingest a single web article
 """
 
 import argparse
@@ -18,7 +19,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from db import document_exists, init_db
-from memory import ingest_pdf
+from memory import ingest_pdf, ingest_url
 
 PAPERS = [
     {
@@ -120,12 +121,28 @@ def download_pdf(arxiv_id, output_path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--skip", type=int, default=0, help="Skip first N papers")
+    parser.add_argument("--limit", type=int, default=None, help="Ingest at most N papers")
+    parser.add_argument("--url", type=str, default=None, help="Ingest a single web article by URL")
+    parser.add_argument("--title", type=str, default=None, help="Title for the web article (required with --url)")
     args = parser.parse_args()
 
     init_db()
+
+    # Web article mode
+    if args.url:
+        if not args.title:
+            parser.error("--title is required when using --url")
+        if document_exists(args.url):
+            print(f"Already ingested — skipping: {args.url}")
+            return
+        ingest_url(args.url, args.title)
+        return
+
     os.makedirs("papers", exist_ok=True)
 
     papers = PAPERS[args.skip:]
+    if args.limit is not None:
+        papers = papers[:args.limit]
     print(f"Ingesting {len(papers)} papers (skipping first {args.skip})...\n")
 
     for i, paper in enumerate(papers, start=args.skip + 1):
