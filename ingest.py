@@ -102,6 +102,26 @@ PAPERS = [
         "title": "Recursively Summarizing Enables Long-Term Dialogue Memory in Large Language Models",
         "arxiv_id": "2308.15022",
     },
+    {
+        "title": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+        "arxiv_id": "2404.16130",
+    },
+    {
+        "title": "MAGMA: A Multi-Graph based Agentic Memory Architecture for AI Agents",
+        "arxiv_id": "2601.03236",
+    },
+    {
+        "title": "AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents",
+        "arxiv_id": "2407.04363",
+    },
+    {
+        "title": "Zep: A Temporal Knowledge Graph Architecture for Agent Memory",
+        "arxiv_id": "2501.13956",
+    },
+    {
+        "title": "Graph-based Agent Memory: Taxonomy, Techniques, and Applications",
+        "arxiv_id": "2602.05665",
+    },
 ]
 
 
