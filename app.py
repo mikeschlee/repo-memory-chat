@@ -15,13 +15,13 @@ except Exception:
     pass
 
 # 3. Import project modules AFTER env is populated
-import anthropic
+from groq import Groq
 from db import concept_count, init_db, list_documents
 import prompts
 from search import run_search
 
-client = anthropic.Anthropic()
-MODEL = "claude-opus-4-6"
+client = Groq()
+MODEL = "llama-3.3-70b-versatile"
 
 # ---------------------------------------------------------------------------
 # LLM helpers
@@ -47,14 +47,14 @@ def answer_with_context(question: str, concepts) -> str:
         )
     context = "\n\n".join(context_blocks)
 
-    response = client.messages.create(
+    response = client.chat.completions.create(
         model=MODEL,
         max_tokens=2048,
         messages=[
             {"role": "user", "content": prompts.answer_from_concepts(question, context)}
         ],
     )
-    return response.content[0].text
+    return response.choices[0].message.content
 
 
 # ---------------------------------------------------------------------------

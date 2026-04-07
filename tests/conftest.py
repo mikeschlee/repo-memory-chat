@@ -2,7 +2,7 @@
 Shared fixtures for all test modules.
 
 Two things happen at the top of this file before any test imports:
-  1. ANTHROPIC_API_KEY is set to a dummy value so anthropic.Anthropic() doesn't
+  1. GROQ_API_KEY is set to a dummy value so groq.Groq() doesn't
      raise at module-level in memory.py and app.py.
   2. Streamlit is replaced with a MagicMock so app.py can be imported without
      a running Streamlit server.
@@ -13,7 +13,7 @@ import sys
 from unittest.mock import MagicMock
 
 # Must happen before any project module is imported
-os.environ.setdefault("ANTHROPIC_API_KEY", "sk-test-key-not-real")
+os.environ.setdefault("GROQ_API_KEY", "gsk-test-key-not-real")
 
 # Mock streamlit. Crucially, chat_input() must return None (falsy) so the
 # `if prompt := st.chat_input(...)` block in app.py does NOT execute at import
@@ -49,17 +49,18 @@ def tmp_db(monkeypatch, tmp_path):
 # ---------------------------------------------------------------------------
 
 @pytest.fixture
-def make_claude_response():
+def make_groq_response():
     """
-    Returns a factory function that builds a minimal mock Anthropic response.
+    Returns a factory function that builds a minimal mock Groq response.
 
     Usage:
-        mock_resp = make_claude_response('["keyword1", "keyword2"]')
-        mock_client.messages.create.return_value = mock_resp
+        mock_resp = make_groq_response('{"keywords": [...], "semantic_answer": "..."}')
+        mock_client.chat.completions.create.return_value = mock_resp
     """
     def _make(text: str):
         resp = MagicMock()
-        resp.content = [MagicMock(text=text)]
+        resp.choices = [MagicMock()]
+        resp.choices[0].message.content = text
         return resp
     return _make
 

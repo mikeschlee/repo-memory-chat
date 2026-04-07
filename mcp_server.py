@@ -10,7 +10,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from mcp.server.fastmcp import FastMCP
-from db import concept_count, init_db, list_documents, search_concepts
+from db import init_db, list_documents
+from search import run_search
 
 init_db()
 mcp = FastMCP("repo-memory")
@@ -20,21 +21,20 @@ mcp = FastMCP("repo-memory")
 def search_memory(query: str) -> str:
     """
     Search the LLM memory research database for concepts matching the query.
+    Uses hybrid keyword + vector search with LLM query understanding.
     Returns relevant concept understandings with source paper citations.
     """
-    keywords = [kw for kw in query.lower().split() if len(kw) > 2]
-    if not keywords:
-        return "Query too short — please provide meaningful search terms."
-
-    rows = search_concepts(keywords)
-    if not rows:
+    results, keywords, _ = run_search(query)
+    if not results:
         return f"No concepts found for query: {query}"
 
-    lines = [f"Found {len(rows)} concept(s) for '{query}':\n"]
-    for concept_title, understanding, doc_title, source_url in rows:
-        lines.append(f"## {concept_title}")
-        lines.append(f"**Source:** [{doc_title}]({source_url})")
-        lines.append(f"{understanding}\n")
+    lines = [f"Found {len(results)} concept(s) for '{query}' (keywords: {', '.join(keywords)}):\n"]
+    for r in results:
+        lines.append(f"## {r.concept_title}")
+        lines.append(f"**Source:** [{r.paper_title}]({r.source_url})")
+        if r.concept_type:
+            lines.append(f"**Type:** {r.concept_type} | **Importance:** {r.importance}/10")
+        lines.append(f"{r.understanding}\n")
     return "\n".join(lines)
 
 

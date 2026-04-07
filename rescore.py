@@ -18,7 +18,7 @@ import argparse
 import json
 import os
 
-import anthropic
+from groq import Groq
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,8 +26,8 @@ load_dotenv()
 from db import get_all_concepts_for_rescore, update_concept_importance
 import prompts
 
-client = anthropic.Anthropic()
-MODEL = "claude-haiku-4-5-20251001"  # ranking task — Haiku is sufficient
+client = Groq()
+MODEL = "llama-3.3-70b-versatile"
 
 # Max concepts per scoring batch to stay within context limits
 BATCH_SIZE = 150
@@ -48,12 +48,12 @@ def rescore_batch(concepts):
 
     last_error = None
     for attempt in range(1, 4):
-        response = client.messages.create(
+        response = client.chat.completions.create(
             model=MODEL,
             max_tokens=4096,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = response.content[0].text
+        raw = response.choices[0].message.content
         start = raw.find("[")
         end = raw.rfind("]") + 1
         if start == -1 or end == 0:

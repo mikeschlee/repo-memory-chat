@@ -15,7 +15,7 @@ import json
 import os
 from dataclasses import dataclass, field
 
-import anthropic
+from groq import Groq
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -45,8 +45,8 @@ TOP_K_FINAL = 12
 TOP_K_VECTOR = 30
 MAX_PER_PAPER = 3  # diversity cap: at most N concepts per paper in final results
 
-anthropic_client = anthropic.Anthropic()
-QUERY_MODEL = "claude-haiku-4-5-20251001"
+groq_client = Groq()
+QUERY_MODEL = "llama-3.3-70b-versatile"
 
 
 @dataclass
@@ -79,12 +79,12 @@ def understand_query(question: str) -> tuple[list[str], str]:
     Falls back to treating the question as a single keyword if parsing fails.
     """
     prompt = prompts.query_understanding(question)
-    response = anthropic_client.messages.create(
+    response = groq_client.chat.completions.create(
         model=QUERY_MODEL,
         max_tokens=512,
         messages=[{"role": "user", "content": prompt}],
     )
-    raw = response.content[0].text
+    raw = response.choices[0].message.content
     start = raw.find("{")
     end = raw.rfind("}") + 1
     if start != -1 and end > 0:

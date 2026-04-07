@@ -1,6 +1,6 @@
 import json
 import pdfplumber
-import anthropic
+from groq import Groq
 from dotenv import load_dotenv
 
 # Must load .env before importing db — db.py reads DATABASE_URL at import time
@@ -9,8 +9,8 @@ load_dotenv()
 from db import insert_document, insert_concept, get_concept_types
 from embeddings import embed_concept, embed_texts
 import prompts
-client = anthropic.Anthropic()
-MODEL = "claude-haiku-4-5-20251001"  # cost-efficient for bulk ingestion
+client = Groq()
+MODEL = "llama-3.3-70b-versatile"
 
 # Max characters of PDF text sent to Claude for concept extraction.
 # arxiv papers average ~60k chars; we cap at 80k to stay well within context.
@@ -27,7 +27,7 @@ def extract_text_from_pdf(pdf_path):
     return text
 
 
-def extract_concepts(text, title, existing_types):
+def extract_concepts(text, title, existing_types=None):
     """
     Send document text to Claude and receive back a summary + list of enriched concepts.
     Returns (summary, concepts) where concepts is a list of dicts.
@@ -36,12 +36,12 @@ def extract_concepts(text, title, existing_types):
 
     last_error = None
     for attempt in range(1, 4):  # up to 3 attempts
-        response = client.messages.create(
+        response = client.chat.completions.create(
             model=MODEL,
             max_tokens=6000,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = response.content[0].text
+        raw = response.choices[0].message.content
         start = raw.find("{")
         end = raw.rfind("}") + 1
         if start == -1 or end == 0:

@@ -1,16 +1,18 @@
 """
-Integration test — real SQLite + real pdfplumber, only the Anthropic API is mocked.
+Integration test — real SQLite + real pdfplumber, only LLM APIs are mocked.
 
-This test exercises the full pipeline:
-  fixture PDF → ingest_pdf() → concepts in DB → search_concepts() → answer_with_context()
+Exercises the full pipeline:
+  fixture PDF → ingest_pdf() → concepts in DB → answer_with_context()
 """
 
 import json
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 import db
 import memory
 import app
+import embeddings
+from search import ConceptResult
 
 
 CONCEPTS = [
@@ -33,55 +35,70 @@ CONCEPTS = [
     },
 ]
 
+INGEST_RESPONSE = json.dumps({"summary": "A paper about memory.", "concepts": CONCEPTS})
 
-def test_full_pipeline_ingest_to_answer(tmp_db, fixture_pdf, make_claude_response):
+# Fake 1024-dim embedding returned instead of real Voyage AI calls
+FAKE_EMBEDDING = [0.0] * 1024
+
+
+def test_full_pipeline_ingest_to_answer(tmp_db, fixture_pdf, make_groq_response):
     # ── 1. Ingest ──────────────────────────────────────────────────────────
     with patch.object(
-        memory.client.messages, "create",
-        return_value=make_claude_response(json.dumps(CONCEPTS)),
-    ):
+        memory.client.chat.completions, "create",
+        return_value=make_groq_response(INGEST_RESPONSE),
+    ), patch("memory.embed_texts", return_value=[FAKE_EMBEDDING, FAKE_EMBEDDING]):
         doc_id = memory.ingest_pdf(
             fixture_pdf,
             "Test Memory Paper",
             "https://example.com/test-paper",
         )
 
-    # Verify document and concepts are persisted
     assert db.document_exists("https://example.com/test-paper")
     assert db.concept_count() == 2
-    docs = db.list_documents()
-    assert any(d[0] == doc_id for d in docs)
+    assert any(d[0] == doc_id for d in db.list_documents())
 
-    # ── 2. Search ──────────────────────────────────────────────────────────
+    # ── 2. Verify keyword search works against stored concepts ─────────────
     results = db.search_concepts(["episodic", "hierarchical"])
     assert len(results) >= 1
     titles = [r[0] for r in results]
     assert "Episodic Memory in Language Models" in titles
 
-    # Each result tuple has the expected shape
     concept_title, understanding, doc_title, source_url = results[0]
     assert doc_title == "Test Memory Paper"
     assert source_url == "https://example.com/test-paper"
     assert "episodic" in understanding.lower()
 
-    # ── 3. Answer ──────────────────────────────────────────────────────────
+    # ── 3. Answer using ConceptResult objects (real pipeline shape) ────────
+    concept = ConceptResult(
+        concept_id="fake-id",
+        concept_title=concept_title,
+        understanding=understanding,
+        concept_type=None,
+        importance=8,
+        section="methods",
+        paper_title=doc_title,
+        source_url=source_url,
+        vector_similarity=0.9,
+        keyword_hit=True,
+    )
+
     with patch.object(
-        app.client.messages, "create",
-        return_value=make_claude_response("Episodic memory stores discrete experiences."),
+        app.client.chat.completions, "create",
+        return_value=make_groq_response("Episodic memory stores discrete experiences."),
     ):
         answer = app.answer_with_context(
             "How do language models use episodic memory?",
-            results,
+            [concept],
         )
 
     assert "Episodic memory" in answer
 
 
-def test_pipeline_returns_no_results_for_unrelated_query(tmp_db, fixture_pdf, make_claude_response):
+def test_pipeline_returns_no_results_for_unrelated_query(tmp_db, fixture_pdf, make_groq_response):
     with patch.object(
-        memory.client.messages, "create",
-        return_value=make_claude_response(json.dumps(CONCEPTS)),
-    ):
+        memory.client.chat.completions, "create",
+        return_value=make_groq_response(INGEST_RESPONSE),
+    ), patch("memory.embed_texts", return_value=[FAKE_EMBEDDING, FAKE_EMBEDDING]):
         memory.ingest_pdf(fixture_pdf, "Test Paper", "https://example.com/test")
 
     results = db.search_concepts(["quantum_tunnelling_photosynthesis_xyz"])
@@ -91,11 +108,11 @@ def test_pipeline_returns_no_results_for_unrelated_query(tmp_db, fixture_pdf, ma
     assert "No relevant concepts" in answer
 
 
-def test_pipeline_deduplicates_across_keywords(tmp_db, fixture_pdf, make_claude_response):
+def test_pipeline_deduplicates_across_keywords(tmp_db, fixture_pdf, make_groq_response):
     with patch.object(
-        memory.client.messages, "create",
-        return_value=make_claude_response(json.dumps(CONCEPTS)),
-    ):
+        memory.client.chat.completions, "create",
+        return_value=make_groq_response(INGEST_RESPONSE),
+    ), patch("memory.embed_texts", return_value=[FAKE_EMBEDDING, FAKE_EMBEDDING]):
         memory.ingest_pdf(fixture_pdf, "Test Paper", "https://example.com/test")
 
     # Both keywords match the same concept — should appear once
