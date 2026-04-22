@@ -1,5 +1,7 @@
 .env
 memory.db
+*.duckdb
+*.duckdb.wal
 papers/*.pdf
 __pycache__/
 *.pyc

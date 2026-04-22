@@ -1,0 +1,569 @@
+# papers.yaml — corpus manifest for LTM expert ingest
+# 25 legacy seeds + 65 verified entries - 4 dedups = 86 total
+
+- title: 'MemGPT: Towards LLMs as Operating Systems'
+  source_type: arxiv
+  source_id_or_url: '2310.08560'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'Generative Agents: Interactive Simulacra of Human Behavior'
+  source_type: arxiv
+  source_id_or_url: '2304.03442'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'Think-in-Memory: Recalling and Post-thinking Enable LLMs with Long-Term Memory'
+  source_type: arxiv
+  source_id_or_url: '2311.08719'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'ReMeMBer: A Robust Memory Module for Enhancing LLMs with External Information'
+  source_type: arxiv
+  source_id_or_url: '2404.10774'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'A-MEM: Agentic Memory for LLM Agents'
+  source_type: arxiv
+  source_id_or_url: '2502.12110'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'MemoRAG: Moving towards Next-Gen RAG via Memory-Inspired Knowledge Discovery'
+  source_type: arxiv
+  source_id_or_url: '2409.05591'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: Cognitive Architectures for Language Agents (CoALA)
+  source_type: arxiv
+  source_id_or_url: '2309.02427'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'MemoryBank: Enhancing Large Language Models with Long-Term Memory'
+  source_type: arxiv
+  source_id_or_url: '2305.10250'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'RecurrentGPT: Interactive Generation of Arbitrarily Long Text'
+  source_type: arxiv
+  source_id_or_url: '2305.13304'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'Reflexion: Language Agents with Verbal Reinforcement Learning'
+  source_type: arxiv
+  source_id_or_url: '2303.11366'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'SCM: A Self-Controlled Memory System for LLMs'
+  source_type: arxiv
+  source_id_or_url: '2304.13343'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: Recurrent Memory Transformer
+  source_type: arxiv
+  source_id_or_url: '2207.06881'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'LongMem: Enabling LLMs to Memorize Long-term Dependencies'
+  source_type: arxiv
+  source_id_or_url: '2306.07174'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'SPRING: Studying Papers and Reasoning to Play Games'
+  source_type: arxiv
+  source_id_or_url: '2305.15486'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'ExpeL: LLM Agents Are Experiential Learners'
+  source_type: arxiv
+  source_id_or_url: '2308.10144'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'Compress to Impress: Unleashing the Potential of Compressive Memory in Real-World Long-term Conversations'
+  source_type: arxiv
+  source_id_or_url: '2402.11975'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'LongAgent: Scaling Language Models to 128k Context through Multi-Agent Collaboration'
+  source_type: arxiv
+  source_id_or_url: '2402.11550'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'HippoRAG: Neurologically Inspired Long-Term Memory for Large Language Models'
+  source_type: arxiv
+  source_id_or_url: '2405.14831'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'Larimar: Large Language Models with Episodic Memory Control'
+  source_type: arxiv
+  source_id_or_url: '2403.11901'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: Recursively Summarizing Enables Long-Term Dialogue Memory in Large Language Models
+  source_type: arxiv
+  source_id_or_url: '2308.15022'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'From Local to Global: A Graph RAG Approach to Query-Focused Summarization'
+  source_type: arxiv
+  source_id_or_url: '2404.16130'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'MAGMA: A Multi-Graph based Agentic Memory Architecture for AI Agents'
+  source_type: arxiv
+  source_id_or_url: '2601.03236'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents'
+  source_type: arxiv
+  source_id_or_url: '2407.04363'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'Zep: A Temporal Knowledge Graph Architecture for Agent Memory'
+  source_type: arxiv
+  source_id_or_url: '2501.13956'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: 'Graph-based Agent Memory: Taxonomy, Techniques, and Applications'
+  source_type: arxiv
+  source_id_or_url: '2602.05665'
+  tier: core
+  rationale: Legacy seed from repo-memory-chat v0 ingest.py PAPERS list.
+- title: Memory Networks
+  authors: Jason Weston, Sumit Chopra, Antoine Bordes
+  year: 2014
+  source_type: arxiv
+  source_id_or_url: '1410.3916'
+  tier: core
+  rationale: Earliest end-to-end differentiable external-memory architecture; origin of slot addressing now resurfacing in
+    agent LTM work.
+- title: End-to-End Memory Networks
+  authors: Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus
+  year: 2015
+  source_type: arxiv
+  source_id_or_url: '1503.08895'
+  tier: core
+  rationale: Introduces soft attention over memory hops, direct precursor to multi-step retrieval loops in modern RAG.
+- title: Neural Turing Machines
+  authors: Alex Graves, Greg Wayne, Ivo Danihelka
+  year: 2014
+  source_type: arxiv
+  source_id_or_url: '1410.5401'
+  tier: strong
+  rationale: Pioneered differentiable read/write addressing; still cited in episodic-memory agent papers.
+- title: Attention Is All You Need
+  authors: Ashish Vaswani et al.
+  year: 2017
+  source_type: arxiv
+  source_id_or_url: '1706.03762'
+  tier: supplementary
+  rationale: Establishes self-attention as the de facto working-memory substrate; reference point for context-window vs. external
+    memory.
+- title: 'Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context'
+  authors: Zihang Dai et al.
+  year: 2019
+  source_type: arxiv
+  source_id_or_url: '1901.02860'
+  tier: strong
+  rationale: First reusable hidden-state cache via segment recurrence — important when deciding between recurrence vs. retrieval
+    LTM.
+- title: Compressive Transformers for Long-Range Sequence Modelling
+  authors: Jack W. Rae, Anna Potapenko, Siddhant M. Jayakumar, Timothy P. Lillicrap
+  year: 2019
+  source_type: arxiv
+  source_id_or_url: '1911.05507'
+  tier: strong
+  rationale: Explicit lossy compression policy informs today's episodic-vs-semantic pruning strategies.
+- title: A Survey on the Memory Mechanism of Large Language Model based Agents
+  authors: Zeyu Zhang, Xiaohe Bo, Chen Ma, Rui Li, Xu Chen et al.
+  year: 2024
+  source_type: arxiv
+  source_id_or_url: '2404.13501'
+  tier: core
+  rationale: Landmark survey structurally categorizing LLM memory into short-term (context), long-term (retrieval), and parametric;
+    canonical taxonomy reference.
+- title: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models
+  authors: Jason Wei et al.
+  year: 2022
+  source_type: arxiv
+  source_id_or_url: '2201.11903'
+  tier: core
+  rationale: Episodic traces of reasoning; foundational for structured agent scratchpads and working memory.
+- title: 'AMA-Bench: Evaluating Long-Horizon Memory for Agentic Applications'
+  authors: Yujie Zhao, Boqin Yuan, Junbo Huang et al.
+  year: 2026
+  source_type: arxiv
+  source_id_or_url: '2602.22769'
+  tier: strong
+  rationale: Critiques similarity-based retrieval failures in long-horizon tasks; proposes a causality-graph approach (AMA-Agent)
+    to track objective dependencies.
+- title: 'AtomMem: Learnable Dynamic Agentic Memory with Atomic Memory Operation'
+  authors: Yupeng Huo, Yaxi Lu, Zhong Zhang, Haotian Chen, Yankai Lin
+  year: 2026
+  source_type: arxiv
+  source_id_or_url: '2601.08323'
+  tier: strong
+  rationale: Reframes memory management as an RL problem over atomic CRUD operations rather than predefined schemas.
+- title: 'Choosing How to Remember: Adaptive Memory Structures for LLM Agents'
+  authors: Mingfei Lu et al.
+  year: 2026
+  source_type: arxiv
+  source_id_or_url: '2602.14038'
+  tier: supplementary
+  rationale: Empirical look at how agents can shift between episodic and semantic storage depending on task horizon.
+- title: 'Anatomy of Agentic Memory: Taxonomy and Empirical Analysis of Evaluation and System Limitations'
+  authors: Dongming Jiang, Yi Li, Songtao Wei et al.
+  year: 2026
+  source_type: arxiv
+  source_id_or_url: '2602.19320'
+  tier: core
+  rationale: Current landmark survey evaluating system limitations, benchmark saturation, and trade-offs of lightweight vs.
+    hierarchical memory.
+- title: 'LightRAG: Simple and Fast Retrieval-Augmented Generation'
+  authors: Zirui Guo, Lianghao Xia, Yanhua Yu, Tu Ao, Chao Huang
+  year: 2024
+  source_type: arxiv
+  source_id_or_url: '2410.05779'
+  tier: strong
+  rationale: Optimizes dual-level (entity vs relationship) retrieval, solving GraphRAG's compute overhead.
+- title: 'OS-Copilot: Towards Generalist Computer Agents with Self-Improvement'
+  authors: Zhiyong Wu et al.
+  year: 2024
+  source_type: arxiv
+  source_id_or_url: '2402.07456'
+  tier: supplementary
+  rationale: Case study on maintaining executable memory and state across a long-horizon desktop environment.
+- title: Letta (formerly MemGPT-2)
+  authors: Packer et al. / Letta Team
+  year: 2024
+  source_type: url
+  source_id_or_url: https://github.com/letta-ai/letta
+  tier: core
+  rationale: Evolution of MemGPT into a production memory-management framework; reference implementation for stateful agent
+    memory.
+- title: 'Memary: Open Source Architecture for Agentic Memory'
+  authors: Memary Team
+  year: 2024
+  source_type: url
+  source_id_or_url: https://github.com/kingjulio8238/memary
+  tier: supplementary
+  rationale: Reference implementation bridging knowledge graphs with semantic memory routing for agents.
+- title: 'REALM: Retrieval-Augmented Language Model Pre-Training'
+  authors: Kelvin Guu, Kenton Lee, Zora Tung, Panupong Pasupat, Ming-Wei Chang
+  year: 2020
+  source_type: arxiv
+  source_id_or_url: '2002.08909'
+  tier: core
+  rationale: Establishes joint retrieval-LM training loop; baseline for any learnable memory interface.
+- title: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+  authors: Patrick Lewis et al.
+  year: 2020
+  source_type: arxiv
+  source_id_or_url: '2005.11401'
+  tier: core
+  rationale: Canonical RAG recipe; reference architecture before long-term agent adaptations.
+- title: 'ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT'
+  authors: Omar Khattab, Matei Zaharia
+  year: 2020
+  source_type: arxiv
+  source_id_or_url: '2004.12832'
+  tier: core
+  rationale: Late-interaction pattern dominates scalable memory stores; token-level matching for entity-rich recall.
+- title: 'ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction'
+  authors: Keshav Santhanam, Omar Khattab, Jon Saad-Falcon, Christopher Potts, Matei Zaharia
+  year: 2021
+  source_type: arxiv
+  source_id_or_url: '2112.01488'
+  tier: core
+  rationale: Definitive late-interaction paper; essential for token-level memory matching at production throughput.
+- title: Dense Passage Retrieval for Open-Domain Question Answering
+  authors: Vladimir Karpukhin et al.
+  year: 2020
+  source_type: arxiv
+  source_id_or_url: '2004.04906'
+  tier: core
+  rationale: Foundational dense retrieval; benchmark for memory retrieval and semantic episodic recall.
+- title: Improving Language Models by Retrieving from Trillions of Tokens (RETRO)
+  authors: Sebastian Borgeaud et al.
+  year: 2021
+  source_type: arxiv
+  source_id_or_url: '2112.04426'
+  tier: strong
+  rationale: Scaling RAG to trillion-token memory; retrieval-augmented decoding strategies.
+- title: Leveraging Passage Retrieval with Generative Models for Open Domain QA (Fusion-in-Decoder)
+  authors: Gautier Izacard, Edouard Grave
+  year: 2020
+  source_type: arxiv
+  source_id_or_url: '2007.01282'
+  tier: strong
+  rationale: Joint fusion of multiple retrieved contexts; applicable to episodic memory consolidation over multiple traces.
+- title: Memorizing Transformers
+  authors: Yuhuai Wu, Markus N. Rabe, DeLesley Hutchins, Christian Szegedy
+  year: 2022
+  source_type: arxiv
+  source_id_or_url: '2203.08913'
+  tier: strong
+  rationale: Explicit kNN memory module over key-value pairs; episodic memory grounded in transformer architecture.
+- title: In-Context Retrieval-Augmented Language Models
+  authors: Ori Ram et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2302.00083'
+  tier: core
+  rationale: Retrieval within context window; hybrid approach to memory/context tradeoff; practical for agent loops.
+- title: 'RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval'
+  authors: Parth Sarthi, Salman Abdullah, Aditi Tuli, Shubh Khanna, Anna Goldie, Christopher D. Manning
+  year: 2024
+  source_type: arxiv
+  source_id_or_url: '2401.18059'
+  tier: strong
+  rationale: Hierarchical memory summarization — agents can retrieve high-level overviews or granular details depending on
+    context.
+- title: 'Lost in the Middle: How Language Models Use Long Contexts'
+  authors: Nelson F. Liu et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2307.03172'
+  tier: core
+  rationale: Defines U-shaped attention curve over long contexts; motivates structured retrieval and reranking order.
+- title: 'Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection'
+  authors: Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, Hannaneh Hajishirzi
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2310.11511'
+  tier: strong
+  rationale: Shifts from passive retrieval to active memory validation — model emits special tokens deciding when to retrieve.
+- title: Active Retrieval Augmented Generation (FLARE)
+  authors: Zhengbao Jiang et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2305.06983'
+  tier: strong
+  rationale: Triggers retrieval dynamically from token probability confidence, not a fixed query phase.
+- title: Corrective Retrieval Augmented Generation (CRAG)
+  authors: Shi-Qi Yan, Jia-Chen Gu, Yun Zhu, Zhen-Hua Ling
+  year: 2024
+  source_type: arxiv
+  source_id_or_url: '2401.15884'
+  tier: strong
+  rationale: Adds an evaluator that grades retrieval quality and falls back to web search when internal memory is insufficient.
+- title: Precise Zero-Shot Dense Retrieval without Relevance Labels (HyDE)
+  authors: Luyu Gao, Xueguang Ma, Jimmy Lin, Jamie Callan
+  year: 2022
+  source_type: arxiv
+  source_id_or_url: '2212.10496'
+  tier: strong
+  rationale: Generate a hypothetical document first to bridge the semantic gap in vector space — key infrastructure for agent
+    memory.
+- title: 'M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings'
+  authors: Jianlv Chen, Shitao Xiao, Peitian Zhang et al. (BGE)
+  year: 2024
+  source_type: arxiv
+  source_id_or_url: '2402.03216'
+  tier: supplementary
+  rationale: State-of-the-art vector-storage embedding layer underpinning modern semantic agent memory.
+- title: 'RetroMAE: Pre-Training Retrieval-oriented Language Models Via Masked Auto-Encoder'
+  authors: Shitao Xiao, Zheng Liu, Yingxia Shao, Zhao Cao
+  year: 2022
+  source_type: arxiv
+  source_id_or_url: '2205.12035'
+  tier: supplementary
+  rationale: Cheaper domain adaptation than task-specific fine-tuning for memory-store encoders.
+- title: Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)
+  authors: Colin Raffel et al.
+  year: 2019
+  source_type: arxiv
+  source_id_or_url: '1910.10683'
+  tier: strong
+  rationale: T5 framework widely used as reranker / memory consolidation encoder in RAG+memory pipelines.
+- title: 'RankGPT: Is ChatGPT Good at Search? Investigating LLMs as Re-Ranking Agents'
+  authors: Weiwei Sun et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2304.09542'
+  tier: strong
+  rationale: LLM-based listwise reranking for memory retrieval; practical ranker for low-volume high-value episodic traces.
+- title: Retrieval Meets Long Context Large Language Models
+  authors: Peng Xu, Wei Ping et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2310.03025'
+  tier: strong
+  rationale: Empirical study of retrieval vs. long-context tradeoff — combining both beats either alone (ICLR 2024).
+- title: 'RULER: What''s the Real Context Size of Your Long-Context Language Models?'
+  authors: Cheng-Ping Hsieh et al.
+  year: 2024
+  source_type: arxiv
+  source_id_or_url: '2404.06654'
+  tier: core
+  rationale: Shows why stuffing a 1M context window is not a replacement for structured long-term memory; models fail at multi-hop
+    reasoning at length.
+- title: 'Longformer: The Long-Document Transformer'
+  authors: Iz Beltagy, Matthew E. Peters, Arman Cohan
+  year: 2020
+  source_type: arxiv
+  source_id_or_url: '2004.05150'
+  tier: strong
+  rationale: Efficient local + global attention for long contexts; architectural choice for memory indexing.
+- title: 'Train Short, Test Long: Attention with Linear Biases (ALiBi)'
+  authors: Ofir Press, Noah A. Smith, Mike Lewis
+  year: 2021
+  source_type: arxiv
+  source_id_or_url: '2108.12409'
+  tier: strong
+  rationale: Position encoding enabling input-length extrapolation — architectural alternative affecting memory design.
+- title: Efficient Streaming Language Models with Attention Sinks (StreamingLLM)
+  authors: Guangxuan Xiao, Yuandong Tian, Beidi Chen, Song Han, Mike Lewis
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2309.17453'
+  tier: strong
+  rationale: Incremental stream attention + key-value eviction; pairs cleanly with episodic memory flushing (ICLR 2024).
+- title: 'LongNet: Scaling Transformers to 1,000,000,000 Tokens'
+  authors: Jiayu Ding et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2307.02486'
+  tier: strong
+  rationale: Dilated attention for extreme context scaling — architectural alternative to retrieval for memory bottlenecks.
+- title: 'Mamba: Linear-Time Sequence Modeling with Selective State Spaces'
+  authors: Albert Gu, Tri Dao
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2312.00752'
+  tier: strong
+  rationale: Recurrent SSM as memory-efficient alternative to attention for agent inner loops.
+- title: 'FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning'
+  authors: Tri Dao
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2307.08691'
+  tier: supplementary
+  rationale: Implementation details directly affect max in-context memory size before paging to external store.
+- title: 'Unifying Large Language Models and Knowledge Graphs: A Roadmap'
+  authors: Shirui Pan, Linhao Luo, Yufei Wang, Chen Chen, Jiapu Wang, Xindong Wu
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2306.08302'
+  tier: core
+  rationale: 'Landmark survey on tri-directional synergy: LLMs for KG extraction, KGs for LLM memory, and joint reasoning
+    (TKDE 2024).'
+- title: 'StructGPT: A General Framework for Large Language Model to Reason over Structured Data'
+  authors: Jinhao Jiang, Kun Zhou, Zican Dong, Keming Ye, Wayne Xin Zhao, Ji-Rong Wen
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2305.09645'
+  tier: strong
+  rationale: Grounding mechanisms for agents querying ontological and tabular memory without hallucination.
+- title: 'G-Retriever: Retrieval-Augmented Generation for Textual Graph Understanding and Question Answering'
+  authors: Xiaoxin He, Yijun Tian, Yifei Sun et al.
+  year: 2024
+  source_type: arxiv
+  source_id_or_url: '2402.07630'
+  tier: strong
+  rationale: Sub-graph retrieval via Prize-Collecting Steiner Tree; reduces context bloat for entity-relation triple queries.
+- title: 'Think-on-Graph: Deep and Responsible Reasoning of LLMs on Knowledge Graphs'
+  authors: Jiashuo Sun et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2307.07697'
+  tier: strong
+  rationale: LLM reasoning path serves as graph traversal mechanism for relational memory (ICLR 2024).
+- title: 'MindMap: Knowledge Graph Prompting Sparks Graph of Thoughts in Large Language Models'
+  authors: Yilin Wen, Zifeng Wang, Jimeng Sun
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2308.09729'
+  tier: supplementary
+  rationale: Shows how providing sub-graphs in the context window structurally changes the LLM's reasoning.
+- title: 'Text2KGBench: A Benchmark for Ontology-Driven Knowledge Graph Generation from Text'
+  authors: Nandana Mihindukulasooriya, Sanju Tiwari, Carlos F. Enguix, Kusum Lata
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2308.02357'
+  tier: supplementary
+  rationale: Evaluation harness for the extraction/canonicalization layers of a memory pipeline.
+- title: 'Toolformer: Language Models Can Teach Themselves to Use Tools'
+  authors: Timo Schick et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2302.04761'
+  tier: strong
+  rationale: 'Tool-use memory grounding: models learn when/how to call APIs and incorporate results.'
+- title: 'Gorilla: Large Language Model Connected with Massive APIs'
+  authors: Shishir G. Patil et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2305.15334'
+  tier: strong
+  rationale: Tool grounding via semantic memory of API docs; canonicalization of external tools.
+- title: 'Language Models as Zero-Shot Planners: Extracting Actionable Knowledge for Embodied Agents'
+  authors: Wenlong Huang, Pieter Abbeel, Deepak Pathak, Igor Mordatch
+  year: 2022
+  source_type: arxiv
+  source_id_or_url: '2201.07207'
+  tier: strong
+  rationale: Memory of domain-specific action semantics; planning over episodic trajectories.
+- title: Least-to-Most Prompting Enables Complex Reasoning in Large Language Models
+  authors: Denny Zhou et al.
+  year: 2022
+  source_type: arxiv
+  source_id_or_url: '2205.10625'
+  tier: strong
+  rationale: Hierarchical memory of subproblems; compositional reasoning over episodic traces.
+- title: 'DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines'
+  authors: Omar Khattab et al.
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2310.03714'
+  tier: strong
+  rationale: Architectural framework for optimizing and parameterizing retrieval+reasoning pipelines systemically.
+- title: 'SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative LLMs'
+  authors: Potsawee Manakul, Adian Liusie, Mark J. F. Gales
+  year: 2023
+  source_type: arxiv
+  source_id_or_url: '2303.08896'
+  tier: strong
+  rationale: Memory-coherence checking; detects inconsistencies in episodic recall by sampling-consistency (EMNLP 2023).
+- title: Why there are complementary learning systems in the hippocampus and neocortex
+  authors: James L. McClelland, Bruce L. McNaughton, Randall C. O'Reilly
+  year: 1995
+  source_type: url
+  source_id_or_url: https://stanford.edu/~jlmcc/papers/McCMcNaughtonOReilly95.pdf
+  tier: core
+  rationale: Biological basis for dual-architecture memory (fast episodic vs slow semantic) that directly inspired MemGPT,
+    A-MEM, HippoRAG.
+- title: What learning systems do intelligent agents need? Complementary learning systems theory updated
+  authors: Dharshan Kumaran, Demis Hassabis, James L. McClelland
+  year: 2016
+  source_type: url
+  source_id_or_url: https://web.stanford.edu/~jlmcc/papers/KumaranHassabisMcC16CLSUpdate.pdf
+  tier: strong
+  rationale: DeepMind's update of CLS theory, explicitly mapping human memory consolidation to neural-network architectures.
+- title: 'SQuAD: 100,000+ Questions for Machine Comprehension of Text'
+  authors: Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, Percy Liang
+  year: 2016
+  source_type: arxiv
+  source_id_or_url: '1606.05250'
+  tier: supplementary
+  rationale: Reading-comprehension benchmark still used for episodic-memory recall evaluation.
+- title: Chunking Strategies for LLM Applications
+  authors: Roie Schwaber-Cohen (Pinecone)
+  year: 2023
+  source_type: url
+  source_id_or_url: https://www.pinecone.io/learn/chunking-strategies/
+  tier: supplementary
+  rationale: Pragmatic deep-dive on semantic vs fixed chunking — a structural bottleneck for any embedding-based episodic
+    store.
+- title: Long Context Prompting / Claude 2.1's Window
+  authors: Anthropic
+  year: 2023
+  source_type: url
+  source_id_or_url: https://www.anthropic.com/news/claude-2-1-prompting
+  tier: supplementary
+  rationale: Heuristic insights on how position in context (beginning vs end) overrides retrieval weighting in practice.
+- title: Karpathy LLM Wiki pattern
+  authors: Andrej Karpathy
+  year: 2026
+  source_type: url
+  source_id_or_url: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+  tier: core
+  rationale: 'NOTE: this overlaps with the seed Karpathy wiki essay; included here only because the gist form is occasionally
+    cited separately.'
